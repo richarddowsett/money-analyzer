@@ -1,25 +1,29 @@
 package controllers
 
+import model.Transaction
 import play.api._
 import play.api.mvc._
-import utils.Conversions._
+import play.api.data._
+import play.api.data.Forms._
 
 object Application extends Controller {
+  val transactionForm: Form[Transaction] = Form(
+    mapping(
+      ("id", nonEmptyText),
+      ("account", nonEmptyText),
+      ("amount", bigDecimal),
+      ("recipient", nonEmptyText)
+    )(Transaction.apply)(Transaction.unapply)
+  )
 
   def index = Action {
 
-    val one = "1".increment
-    val oneString = "one".increment
-    val two = "2".increment
+    Ok(views.html.index(transactionForm))
+  }
 
-    Ok(views.html.index(
-      s"""
-         | Using exceptions
-         | value of 1: $one
-         | value of one: $oneString
-         | value of twoString: ${"two".increment}
-         | value of two: $two
-       """.stripMargin))
+  def txnSubmit = Action { implicit request =>
+    val transaction = transactionForm.bindFromRequest.get
+    Ok(views.html.confirmation(transaction))
   }
 
 }

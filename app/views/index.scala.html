@@ -1,6 +1,16 @@
-@(message: String)
+@(transactionForm:Form[Transaction])
 
-@main("title") {
 
-    <p>@message</p>
+
+@main("Money Analyser") {
+
+<p>blah</p>
+
+    @helper.form(action = routes.Application.txnSubmit()){
+        @helper.inputText(transactionForm("id"))
+        @helper.inputText(transactionForm("account"))
+        @helper.inputText(transactionForm("amount"))
+        @helper.inputText(transactionForm("recipient"))
+        <input type="submit" value="Submit"/>
+    }
 }
