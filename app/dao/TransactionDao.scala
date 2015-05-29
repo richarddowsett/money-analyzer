@@ -1,12 +1,13 @@
 package dao
 
-import com.mongodb.casbah.Imports._
+import play.api.db._
 
 /**
  * Created by Richard on 17/05/2015.
  */
 class TransactionDao {
+  val ds = DB.getDataSource()
 
-  val mongoDb = MongoClient("localhost", 27017)
+  def storeTransaction()
 
 }

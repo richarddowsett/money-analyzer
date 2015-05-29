@@ -1,16 +1,23 @@
-@(transactionForm:Form[Transaction])
+@(transactionForm: Form[TransactionList])
 
 
 
 @main("Money Analyser") {
 
-<p>blah</p>
+    <p>blah</p>
 
-    @helper.form(action = routes.Application.txnSubmit()){
-        @helper.inputText(transactionForm("id"))
-        @helper.inputText(transactionForm("account"))
-        @helper.inputText(transactionForm("amount"))
-        @helper.inputText(transactionForm("recipient"))
+    @helper.form(action = routes.Application.txnSubmit()) {
+        <table>
+            <tr><th>ID</th><th>Account</th><th>Amount</th><th>Recipient</th></tr>
+            @helper.repeat(transactionForm("transactionList"), min=5) {transaction =>
+                <tr>
+                    <td>@helper.inputText(transaction("id"), '_label -> null)</td>
+                    <td>@helper.inputText(transaction("account"), '_label -> null)</td>
+                    <td>@helper.inputText(transaction("amount"), '_label -> null)</td>
+                    <td>@helper.inputText(transaction("recipient"), '_label -> null)</td>
+                </tr>
+            }
+        </table>
         <input type="submit" value="Submit"/>
     }
 }

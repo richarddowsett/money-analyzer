@@ -1,20 +1,25 @@
 package controllers
 
-import model.Transaction
+import model.{TransactionList, Transaction}
 import play.api._
 import play.api.mvc._
 import play.api.data._
 import play.api.data.Forms._
 
 object Application extends Controller {
-  val transactionForm: Form[Transaction] = Form(
+  val transactionForm: Form[TransactionList] = Form(
     mapping(
-      ("id", nonEmptyText),
-      ("account", nonEmptyText),
-      ("amount", bigDecimal),
-      ("recipient", nonEmptyText)
-    )(Transaction.apply)(Transaction.unapply)
+      "transactionList" -> seq(
+        mapping(
+          "id" -> nonEmptyText,
+          "account" -> nonEmptyText,
+          "amount" -> bigDecimal,
+          "recipient" -> nonEmptyText
+        )(Transaction.apply)(Transaction.unapply)
+      )
+    )(TransactionList.apply)(TransactionList.unapply)
   )
+
 
   def index = Action {
 

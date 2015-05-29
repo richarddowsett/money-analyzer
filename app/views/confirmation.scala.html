@@ -1,10 +1,13 @@
-@(txn:Transaction)
+@import model.TransactionList
+
+@(txns: TransactionList)
 
 
 
 @main("Money Analyser") {
 
     <p>blah</p>
-
-    <p>@txn.account</p>
+    @for(t <- txns.transactionList) {
+        <p>@t.account</p>
+    }
 }
