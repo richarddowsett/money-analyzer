@@ -13,19 +13,24 @@ class TransactionDao {
   import play.api.Play.current
 
   val ds = DB.getDataSource()
+  val db = Database.forDataSource(ds)
   val transactions = TableQuery[TransactionTable]
-  transactions.ddl.create
 
   def storeTransaction(txn: Transaction) = {
-    transactions +=(txn.id, txn.account, txn.amount, txn.recipient)
+    db.withSession {
+      implicit session =>
+        transactions +=(txn.id, txn.account, txn.amount, txn.recipient)
+    }
   }
 
   def loadAll(): List[Transaction] = {
-    val temp = transactions.take(10).list
+    db.withSession { implicit session =>
+      val temp = transactions.take(10).list
 
-    temp map (x => {
-      Transaction(x._1, x._2, x._3, x._4)
-    })
+      temp map (x => {
+        Transaction(x._1, x._2, x._3, x._4)
+      })
+    }
   }
 
 }

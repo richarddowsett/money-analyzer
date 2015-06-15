@@ -30,7 +30,7 @@ object Application extends Controller {
   }
 
   def view = Action {
-    Ok(views.html.view(transactionDao.loadAll.map(x => )))
+    Ok(views.html.view(transactionDao.loadAll))
   }
 
   def txnSubmit = Action { implicit request =>

@@ -1,9 +1,12 @@
 @(transactions:List[Transaction])
 
-@main("Money Analyser") {
+@main("View All Transactions") {
 
-    @for(t <- transactions){
-        <p>t.amount</p>
-    }
+@if(transactions.isEmpty){
+<p>Nothing to report</p>
+}else{
+@for(t <- transactions){
+<p>t.amount</p>
+}}
 
 }
