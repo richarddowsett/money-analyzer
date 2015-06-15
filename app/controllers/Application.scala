@@ -15,10 +15,10 @@ object Application extends Controller {
     mapping(
       "transactionList" -> seq(
         mapping(
-          "id" -> nonEmptyText,
-          "account" -> nonEmptyText,
-          "amount" -> bigDecimal,
-          "recipient" -> nonEmptyText
+          "id" -> optional(nonEmptyText),
+          "account" -> optional(nonEmptyText),
+          "amount" -> optional(bigDecimal),
+          "recipient" -> optional(nonEmptyText)
         )(Transaction.apply)(Transaction.unapply)
       )
     )(TransactionList.apply)(TransactionList.unapply)
@@ -35,7 +35,7 @@ object Application extends Controller {
 
   def txnSubmit = Action { implicit request =>
     val transaction = transactionForm.bindFromRequest.get
-    transaction.transactionList.foreach(transactionDao.storeTransaction)
+    transaction.transactionList.filter(x => x.isComplete).foreach(transactionDao.storeTransaction)
     Ok(views.html.confirmation(transaction))
   }
 

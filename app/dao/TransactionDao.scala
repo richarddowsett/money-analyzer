@@ -19,7 +19,7 @@ class TransactionDao {
   def storeTransaction(txn: Transaction) = {
     db.withSession {
       implicit session =>
-        transactions +=(txn.id, txn.account, txn.amount, txn.recipient)
+        transactions +=(txn.id.get, txn.account.get, txn.amount.get, txn.recipient.get)
     }
   }
 
@@ -28,7 +28,7 @@ class TransactionDao {
       val temp = transactions.take(10).list
 
       temp map (x => {
-        Transaction(x._1, x._2, x._3, x._4)
+        Transaction.build(x._1, x._2, x._3, x._4)
       })
     }
   }
