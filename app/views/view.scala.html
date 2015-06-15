@@ -1,0 +1,9 @@
+@(transactions:List[Transaction])
+
+@main("Money Analyser") {
+
+    @for(t <- transactions){
+        <p>t.amount</p>
+    }
+
+}

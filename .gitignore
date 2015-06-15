@@ -1,0 +1,5 @@
+*activator*
+*idea*
+target/
+logs/
+.sbtserver/

@@ -1,5 +1,6 @@
 package controllers
 
+import dao.TransactionDao
 import model.{TransactionList, Transaction}
 import play.api._
 import play.api.mvc._
@@ -7,6 +8,9 @@ import play.api.data._
 import play.api.data.Forms._
 
 object Application extends Controller {
+
+  val transactionDao = new TransactionDao
+
   val transactionForm: Form[TransactionList] = Form(
     mapping(
       "transactionList" -> seq(
@@ -22,12 +26,16 @@ object Application extends Controller {
 
 
   def index = Action {
-
     Ok(views.html.index(transactionForm))
+  }
+
+  def view = Action {
+    Ok(views.html.view(transactionDao.loadAll.map(x => )))
   }
 
   def txnSubmit = Action { implicit request =>
     val transaction = transactionForm.bindFromRequest.get
+    transaction.transactionList.foreach(transactionDao.storeTransaction)
     Ok(views.html.confirmation(transaction))
   }
 
