@@ -2,7 +2,7 @@ package model
 
 import slick.lifted.ProvenShape
 
-import slick.driver.H2Driver.api._
+import scala.slick.driver.H2Driver.simple._
 
 /**
  * Created by Richard on 29/05/2015.

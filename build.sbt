@@ -24,6 +24,6 @@ libraryDependencies ++= Seq(
 libraryDependencies += "org.mongodb" %% "casbah" % "2.8.1"
 
 libraryDependencies ++= Seq(
-  "com.typesafe.slick" %% "slick" % "3.0.0",
+  "com.typesafe.slick" %% "slick" % "2.1.0",
   "org.slf4j" % "slf4j-nop" % "1.6.4"
 )
