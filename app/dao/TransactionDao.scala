@@ -26,7 +26,7 @@ class TransactionDao {
 
   def loadAll(): List[Transaction] = {
     db.withSession { implicit session =>
-      val temp = transactions.take(10).list
+      val temp = transactions.filter(x => x.account === "joint").list
 
       temp map (x => {
         Transaction.build(x._1, x._2, x._3, x._4, x._5)
