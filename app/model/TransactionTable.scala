@@ -1,15 +1,22 @@
 package model
 
-import slick.lifted.ProvenShape
+
+import java.sql.Date
+import java.time.LocalDate
 
 import scala.slick.driver.H2Driver.simple._
+import scala.slick.jdbc.JdbcType
+import scala.slick.lifted.ProvenShape
 
 /**
  * Created by Richard on 29/05/2015.
  */
-class TransactionTable(tag: Tag) extends Table[(String, String, BigDecimal, String)](tag, "TRANSACTIONS") {
+class TransactionTable(tag: Tag) extends Table[(Date, String, String, BigDecimal,String)](tag, "TRANSACTIONS") {
 
-  def id = column[String]("TRANSACTION_ID")
+
+  def date = column[Date]("DATE")
+
+  def txnType = column[String]("TYPE")
 
   def account = column[String]("ACCOUNT")
 
@@ -17,7 +24,7 @@ class TransactionTable(tag: Tag) extends Table[(String, String, BigDecimal, Stri
 
   def recipient = column[String]("RECIPIENT")
 
-  override def * : ProvenShape[(String, String, BigDecimal, String)] = (id, account, amount, recipient)
+  override def * : ProvenShape[(Date, String, String, BigDecimal,String)] = (date, txnType, account, amount, recipient)
 }
 
 

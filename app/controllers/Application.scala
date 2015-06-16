@@ -1,12 +1,11 @@
 package controllers
 
 import dao.TransactionDao
-import model.{TransactionList, Transaction}
-import play.api._
-import play.api.mvc._
-import play.api.data._
-import play.api.data.Forms._
+import model.{Transaction, TransactionList}
 import play.api.Logger
+import play.api.data.Forms._
+import play.api.data._
+import play.api.mvc._
 
 object Application extends Controller {
 
@@ -16,7 +15,8 @@ object Application extends Controller {
     mapping(
       "transactionList" -> seq(
         mapping(
-          "id" -> optional(nonEmptyText),
+          "date" -> optional(sqlDate),
+          "txnType" -> optional(nonEmptyText),
           "account" -> optional(nonEmptyText),
           "amount" -> optional(bigDecimal),
           "recipient" -> optional(nonEmptyText)

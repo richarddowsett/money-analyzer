@@ -3,9 +3,29 @@
 
 @main("Money Analyser") {
 
-<p>blah</p>
-
-
+@helper.form(action = routes.Application.txnSubmit()) {
+<table>
+    <tr>
+        <th>Date</th>
+        <th>Transaction Type</th>
+        <th>Account</th>
+        <th>Amount</th>
+        <th>Recipient</th>
+    </tr>
+    @helper.repeat(transactionForm("transactionList"), min=5) {transaction =>
+    <tr>
+        <td>@helper.input(transaction("date")) { (id, name, value, args) =>
+            <input type="date" name="@name" id="@id">}
+        </td>
+        <td>@helper.inputText(transaction("txnType"), '_label -> null)</td>
+        <td>@helper.inputText(transaction("account"), '_label -> null)</td>
+        <td>@helper.inputText(transaction("amount"), '_label -> null)</td>
+        <td>@helper.inputText(transaction("recipient"), '_label -> null)</td>
+    </tr>
+    }
+</table>
+<input type="submit" value="Submit"/>
+}
 
 @helper.form(action = routes.Application.upload, 'enctype -> "multipart/form-data") {
 

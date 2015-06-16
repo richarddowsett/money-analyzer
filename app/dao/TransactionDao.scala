@@ -16,10 +16,11 @@ class TransactionDao {
   val db = Database.forDataSource(ds)
   val transactions = TableQuery[TransactionTable]
 
+
   def storeTransaction(txn: Transaction) = {
     db.withSession {
       implicit session =>
-        transactions +=(txn.id.get, txn.account.get, txn.amount.get, txn.recipient.get)
+        transactions +=(txn.date.get, txn.txnType.get, txn.account.get, txn.amount.get, txn.recipient.get)
     }
   }
 
@@ -28,9 +29,11 @@ class TransactionDao {
       val temp = transactions.take(10).list
 
       temp map (x => {
-        Transaction.build(x._1, x._2, x._3, x._4)
+        Transaction.build(x._1, x._2, x._3, x._4, x._5)
       })
     }
   }
 
 }
+
+
