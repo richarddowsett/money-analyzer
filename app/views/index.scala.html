@@ -1,23 +1,19 @@
 @(transactionForm: Form[TransactionList])
 
 
-
 @main("Money Analyser") {
 
-    <p>blah</p>
+<p>blah</p>
 
-    @helper.form(action = routes.Application.txnSubmit()) {
-        <table>
-            <tr><th>ID</th><th>Account</th><th>Amount</th><th>Recipient</th></tr>
-            @helper.repeat(transactionForm("transactionList"), min=5) {transaction =>
-                <tr>
-                    <td>@helper.inputText(transaction("id"), '_label -> null)</td>
-                    <td>@helper.inputText(transaction("account"), '_label -> null)</td>
-                    <td>@helper.inputText(transaction("amount"), '_label -> null)</td>
-                    <td>@helper.inputText(transaction("recipient"), '_label -> null)</td>
-                </tr>
-            }
-        </table>
-        <input type="submit" value="Submit"/>
-    }
+
+
+@helper.form(action = routes.Application.upload, 'enctype -> "multipart/form-data") {
+
+<input type="file" name="transactions">
+
+<p>
+    <input type="submit">
+</p>
+
+}
 }
